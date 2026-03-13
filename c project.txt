@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main()
+{
+    char s[200], t[200];
+    int c;
+
+    printf("Enter string:\n");
+    fgets(s, 200, stdin);
+    s[strcspn(s, "\n")] = 0;
+
+    do
+    {
+        printf("\n1.Len 2.Words 3.Rev 4.UP 5.low 6.Exit\nChoice: ");
+        if (scanf("%d", &c) != 1) break;
+        getchar();
+
+        switch (c)
+        {
+            case 1:
+                printf("Len=%d\n", (int)strlen(s));
+                break;
+
+            case 2:
+            {
+                int w = 0;
+                for (int i = 0; s[i]; i++)
+                    if (!isspace((unsigned char)s[i]) &&
+                       (i == 0 || isspace((unsigned char)s[i - 1])))
+                        w++;
+                printf("Words=%d\n", w);
+                break;
+            }
+
+            case 3:
+            {
+                int i, j;
+                for (i = 0, j = strlen(s) - 1; i <= j; i++, j--)
+                {
+                    char temp = s[i];
+                    s[i] = s[j];
+                    s[j] = temp;
+                }
+                printf("%s\n", s);
+                break;
+            }
+
+            case 4:
+                strcpy(t, s);
+                for (int i = 0; t[i]; i++)
+                    t[i] = toupper((unsigned char)t[i]);
+                printf("%s\n", t);
+                break;
+
+            case 5:
+                strcpy(t, s);
+                for (int i = 0; t[i]; i++)
+                    t[i] = tolower((unsigned char)t[i]);
+                printf("%s\n", t);
+                break;
+
+        }
+
+    } while (c != 6);
+
+    return 0;
+}
